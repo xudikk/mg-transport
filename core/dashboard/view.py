@@ -11,3 +11,7 @@ from django.shortcuts import redirect, render
 @login_required(login_url='login')
 def index(request):
     return render(request, 'pages/index.html', {'active': "active"})
+
+
+
+

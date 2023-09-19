@@ -1,0 +1,417 @@
+{% extends 'base.html' %}
+
+{% block title %}MG | Models {% endblock %}
+{% block page_title %} Avtomobil Rusumlari {% endblock %}
+{% block pagetitle %} Rusumlar {% endblock %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+
+{% if pos == 'one' %}
+
+      <!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-12">
+
+        <div class="card mb-4 border-left-warning bg-info">
+            <div class="card-body text-center">
+                <h4>Avtomobil Rusumlari</h4>
+            </div>
+        </div>
+
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>To'lliq Nomi: <mark><i>{{ root.name }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Turi: <mark><i>{% if root.type == 'light_car' %}Yengil avtomobil
+                        {% elif root.type == 'bus' %}
+                        Avtobus
+                        {% elif root.type == 'microbus' %}
+                        Mikroavtobus
+                        {% elif root.type == 'trailer' %}
+                        Tirkama
+                        {% elif root.type == 'semi_trailer' %}
+                        Yarim tirkama
+                        {% elif root.type == 'freight_carrier' %}
+                        Yuk tashuvchi
+                        {% elif root.type == 'freight_passenger_carrier' %}
+                        Yuk-yo'lovchi tashuvchi
+                        {% elif root.type == 'special' %}
+                        Maxsus
+                        {% elif root.type == 'electronakliyot' %}
+                        Elektronakliyot
+                        {% elif root.type == 'motonakliyot' %}
+                        Motonakliyot
+                        {% else %}
+                        Boshqa
+                        {% endif %}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Markasi: <mark><i>{{ root.brand }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Turadigan joylar soni: <mark><i>{{ root.stay_place_count }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>O'rindiqlar(haydovchi bilan) soni: <mark><i>{{ root.seat_count }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Dvigatel quvvati: <mark><i>{{ root.engine_power }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Yuksiz og'irligi: <mark><i>{{ root.unladen_mass }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>To'la og'irligi: <mark><i>{{ root.full_mass }}</i></mark></h4>
+            </div>
+        </div>
+
+
+        <div class="card mb-4 border-bottom-warning">
+            <div class="card-body">
+                <a href="{% url 'dashboard-auto-edit' key='amodel' pk=root.id %}" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span class="text">Tahrirlash</span>
+                </a>
+                <a href="{% url 'dashboard-auto-list' key='amodel' %}" class="btn btn-warning btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-arrow-left"></i>
+                    </span>
+                    <span class="text">Listlarga qaytish</span>
+                </a>
+                <a data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span class="text">O'chirish</span>
+                </a>
+                <a href="{% url 'home' %}" class="btn btn-info btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="text">Bosh Menu</span>
+                </a>
+            </div>
+        </div>
+
+
+        </div>
+
+        <!-- Delete Modal-->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Chiqish so'rovi</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Ro'stdan ham ushbu {{ root.FIO }} ni o'chirmoqchimisz?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Yo'q</button>
+                        <a class="btn btn-primary" href="{% url 'dashboard-auto-delete' key='amodel' pk=root.id %}">Ha</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% elif pos == 'form' %}
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Tezkor Forma</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                    <h2 class="form-group text-center">Bo'linmalar Qo'shish yoki o'zgartirish</h2>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-2">
+                            {% bootstrap_field form.brand %}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {% bootstrap_field form.type %}
+                        </div>
+                        <div class="form-group col-md-2" title="Tumanni yozing">
+                            {% bootstrap_field form.name %}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {% bootstrap_field form.stay_place_count  %}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {% bootstrap_field form.seat_count %}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {% bootstrap_field form.engine_power %}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {% bootstrap_field form.unladen_mass %}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {% bootstrap_field form.full_mass %}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>O'zgarishlarni Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'dashboard-auto-list' key='amodel' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
+                                        <i class="fas fa-home"></i> Listlarga qaytish
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+{% else %}
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Rusumlar ro'yxati</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>T/r</th>
+                    <th>Markasi</th>
+                    <th>Rusum nomi</th>
+                    <th>Turi</th>
+                    <th>Turadigan joylar soni</th>
+                    <th>O'rindiqlar (haydovchi bilan) soni</th>
+                    <th>Dvigatel quvvati</th>
+                    <th>Yuksiz og'irligi</th>
+                    <th>To'la og'irligi</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in roots %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.brand }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{% if i.type == 'light_car' %}Yengil avtomobil
+                        {% elif i.type == 'bus' %}
+                        Avtobus
+                        {% elif i.type == 'microbus' %}
+                        Mikroavtobus
+                        {% elif i.type == 'trailer' %}
+                        Tirkama
+                        {% elif i.type == 'semi_trailer' %}
+                        Yarim tirkama
+                        {% elif i.type == 'freight_carrier' %}
+                        Yuk tashuvchi
+                        {% elif i.type == 'freight_passenger_carrier' %}
+                        Yuk-yo'lovchi tashuvchi
+                        {% elif i.type == 'special' %}
+                        Maxsus
+                        {% elif i.type == 'electronakliyot' %}
+                        Elektronakliyot
+                        {% elif i.type == 'motonakliyot' %}
+                        Motonakliyot
+                        {% else %}
+                        Boshqa
+                        {% endif %}
+
+                    </td>
+                    <td>{{ i.stay_place_count }}</td>
+                    <td>{{ i.seat_count }}</td>
+                    <td>{{ i.engine_power }}</td>
+                    <td>{{ i.unladen_mass }} kg</td>
+                    <td>{{ i.full_mass }} kg</td>
+                    <td>
+                        <a href="{% url 'dashboard-auto-detail' key='amodel' pk=i.id %}" title="To'lliq ma'lumotlarni ko'rish" class="btn btn-info btn-circle btn-sm">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a href="{% url 'dashboard-auto-ontime-edit' key='amodel' pk=i.id status='form' %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+                </tbody>
+
+              </table>
+                <br>
+                <hr>
+                <!--    **********************************************************************************************************  -->
+                {% if suggest_status == 'form' %}
+                    <div class="row">
+                      <!-- left column -->
+                      <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-success">
+
+
+                          <form role="form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <h2 class="form-group text-center">Tezkor Forma</h2>
+                                <div class="form-row">
+
+                                        <div class="form-group col-md-3">
+                                            {% bootstrap_field form.brand %}
+                                        </div>
+                                        <div class="form-group col-md-3" title="Tumanni yozing">
+                                            {% bootstrap_field form.name %}
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            {% bootstrap_field form.type %}
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            {% bootstrap_field form.stay_place_count  %}
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            {% bootstrap_field form.seat_count %}
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            {% bootstrap_field form.engine_power %}
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            {% bootstrap_field form.unladen_mass %}
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            {% bootstrap_field form.full_mass %}
+                                        </div>
+                                </div>
+                                <div class="card-footer">
+                                <div class="form-row">
+                                    <div class="card-action right-align">
+                                          <button type="submit" class="btn btn-block btn-success">
+                                            <i class="fas fa-check"></i>Saqlash
+                                          </button>
+                                    </div>
+                                    <a href="{% url 'dashboard-auto-list' key='amodel' %}">
+                                        <div class="card-action ml-1 right-align">
+                                              <button type="button" class="btn btn-block btn-info">
+                                                    <i class="fas fa-home"></i> Bekor qilish
+                                              </button>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            </div>
+
+                          </form>
+                        </div>
+                      </div>
+
+                    </div>
+
+                {% endif %}
+                <!--    **********************************************************************************************************  -->
+
+                {% if suggest_status != 'form' %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if roots.has_previous %}
+                            <a href="?page=1" class="btn btn-primary btn-sm">&laquo;first</a>
+                            <a href="?page={{ roots.previous_page_number }}"  class="btn btn-primary btn-sm">prev</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ roots.number }} of {{ roots.paginator.num_pages }}.
+                        </span>
+
+                        {% if roots.has_next %}
+                            <a href="?page={{ roots.next_page_number }}" class="btn btn-primary btn-sm">next</a>
+                            <a href="?page={{ roots.paginator.num_pages }}" class="btn btn-primary btn-sm">last&raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 mb-4">
+                        <a href="{% url 'dashboard-auto-ontime-add' key='amodel' status='form' %}" class="btn btn-success" >
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Yangi qo'shish</span>
+                        </a>
+                        <a href="{% url 'home' %}"  class="btn btn-info" >
+                           <span class="icon text-white-50">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            <span class="text">Bosh Menu</span>
+                       </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+
+
+
+
+
+{% endif %}
+
+
+
+{% endblock %}

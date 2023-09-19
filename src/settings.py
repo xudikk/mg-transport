@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     # external
     'corsheaders',
     "bootstrap4",
+    "phonenumber_field",
 ]
 
 MIDDLEWARE = [
@@ -154,7 +155,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     CORS_ORIGIN_WHITELIST = os.getenv('CORS_URL').split(',')
 
 
-PAGINATE_BY = 20
+PAGINATE_BY = 10
 
 LOGS_DIR = BASE_DIR / 'log'
 

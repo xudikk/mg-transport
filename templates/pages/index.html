@@ -1,10 +1,106 @@
 {% extends 'base.html' %}
 
 {% block title %} Home {% endblock %}
-{% block pagetitle %}Main{% endblock %}
+{% block pagetitle %}Avtomototransportlar{% endblock %}
 {% block content %}
 
 
 
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
 
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Avtomototransportlar ro'yxati</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Davlat raqami</th>
+                    <th>Rusumi</th>
+                    <th>Turi</th>
+                    <th>Rangi</th>
+                    <th>Ishlab chiq. yili</th>
+                    <th>Dvigatel raqami</th>
+                    <th>Kuzov raqami</th>
+                    <th>Shassi raqami</th>
+                    <th>Texnik talon</th>
+                    <th>Tegishliligi</th>
+                    <th>Yuridik manzili va telefon raqami</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in roots %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>
+                        <a href="" title="To'lliq ma'lumotlarni ko'rish" class="btn btn-info btn-circle btn-sm">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a href="" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+                </tbody>
+
+              </table>
+                <br>
+                <hr>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if roots.has_previous %}
+                            <a href="?page=1" class="btn btn-primary btn-sm">&laquo;first</a>
+                            <a href="?page={{ roots.previous_page_number }}"  class="btn btn-primary btn-sm">prev</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ roots.number }} of {{ roots.paginator.num_pages }}.
+                        </span>
+
+                        {% if roots.has_next %}
+                            <a href="?page={{ roots.next_page_number }}" class="btn btn-primary btn-sm">next</a>
+                            <a href="?page={{ roots.paginator.num_pages }}" class="btn btn-primary btn-sm">last&raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 mb-4">
+                        <a href="" class="btn btn-success" >
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Yangi Qo'shish</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
 {% endblock %}
