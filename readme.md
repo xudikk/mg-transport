@@ -25,8 +25,7 @@
    diqqat bu qismda sizdan 4ta ma'lumot so'raladi
    1. username
    2. user type - (1-Super Admin, 2-Admin) # default 1ni bosib keting
-   3. region_id # default 1ni bosib keting
-   4. password
+   3. password
 
 6. Ketma ketlik tugagach endi run berib ishlatishingiz mumkin :)
    ```bash
