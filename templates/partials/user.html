@@ -1,0 +1,413 @@
+
+{% if pos == 'one' %}
+
+      <!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-12">
+
+        <div class="card mb-4 border-left-warning bg-info">
+            <div class="card-body text-center">
+                <h4>Bo'linmalar</h4>
+            </div>
+        </div>
+
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>To'lliq Nomi: <mark><i>{{ root.name }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Turi: <mark><i>{% if i.type == 'guarding' %} Qo'riqlash bo'linma{% else %} Harbiy bo'linma{% endif %}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Viloyat: <mark><i>{{ root.district.region }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Tuman: <mark><i>{{ root.district }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Yuridik manzili: <mark><i>{{ root.legal_address }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>Telefon Raqami: <mark><i>{{ root.phone }}</i></mark></h4>
+            </div>
+        </div>
+        <div class="card mb-4 border-left-warning">
+            <div class="card-body">
+                <h4>STIR: <mark><i>{{ root.stir }}</i></mark></h4>
+            </div>
+        </div>
+
+
+        <div class="card mb-4 border-bottom-warning">
+            <div class="card-body">
+                <a href="{% url 'dashboard-auto-edit' key='transport' pk=root.id %}" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span class="text">Tahrirlash</span>
+                </a>
+                <a href="{% url 'dashboard-auto-list' key='transport' %}" class="btn btn-warning btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-arrow-left"></i>
+                    </span>
+                    <span class="text">Listlarga qaytish</span>
+                </a>
+                <a data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span class="text">O'chirish</span>
+                </a>
+                <a href="{% url 'home' %}" class="btn btn-info btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="text">Bosh Menu</span>
+                </a>
+            </div>
+        </div>
+
+
+        </div>
+
+        <!-- Delete Modal-->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Chiqish so'rovi</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Ro'stdan ham ushbu {{ root.FIO }} ni o'chirmoqchimisz?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Yo'q</button>
+                        <a class="btn btn-primary" href="{% url 'dashboard-auto-delete' key='transport' pk=root.id %}">Ha</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% elif pos == 'form' %}
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Tezkor Forma</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                    <h2 class="form-group text-center">Bo'linmalar Qo'shish yoki o'zgartirish</h2>
+                    <div class="form-row">
+
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.department %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.manufactured_area %}
+                                    </div>
+                                    <div class="form-group col-md-2" title="Tumanni yozing">
+                                        {% bootstrap_field form.state_number %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.manufactured_year  %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.color %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.type %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.fuel_type %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.car_model %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.engine_number %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.kuzov_number %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.tex_talon_number %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.shassi_number %}
+                                    </div>
+                    </div>
+                    <div class="card-footer">
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>O'zgarishlarni Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'dashboard-auto-list' key='transport' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
+                                        <i class="fas fa-home"></i> Listlarga qaytish
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+{% else %}
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Transportlar ro'yxati</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>T/r</th>
+                    <th>Bo'linma</th>
+                    <th>Davlat raqami</th>
+                    <th>Ishlab chiq. yili</th>
+                    <th>Rangi</th>
+                    <th>Avtomobil turi</th>
+                    <th>Yoqilg'i turi</th>
+                    <th>Rusumi</th>
+
+                    <th>Dvigatel raqami</th>
+                    <th>Kuzov raqami</th>
+                    <th>Tex. talon raqami</th>
+                    <th>Shassi raqami</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in roots %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.department }}</td>
+                    <td>{{ i.state_number }}</td>
+                    <td>{{ i.manufactured_year }}</td>
+                    <td>{{ i.color }}</td>
+                    <td>{% if i.type == 'light_car' %}Yengil avtomobil
+                        {% elif i.type == 'bus' %}
+                        Avtobus
+                        {% elif i.type == 'microbus' %}
+                        Mikroavtobus
+                        {% elif i.type == 'trailer' %}
+                        Tirkama
+                        {% elif i.type == 'semi_trailer' %}
+                        Yarim tirkama
+                        {% elif i.type == 'freight_carrier' %}
+                        Yuk tashuvchi
+                        {% elif i.type == 'freight_passenger_carrier' %}
+                        Yuk-yo'lovchi tashuvchi
+                        {% elif i.type == 'special' %}
+                        Maxsus
+                        {% elif i.type == 'electronakliyot' %}
+                        Elektronakliyot
+                        {% elif i.type == 'motonakliyot' %}
+                        Motonakliyot
+                        {% else %}
+                        Boshqa
+                        {% endif %}
+
+                    </td>
+                    <td>{{ i.fuel_type }}</td>
+                    <td>{{ i.car_model }}</td>
+                    <td>{{ i.engine_number }}</td>
+
+                    <td>{{ i.kuzov_number }}</td>
+                    <td>{{ i.tex_talon_number }}</td>
+                    <td>{{ i.shassi_number }}</td>
+                    <td>
+                        <a href="{% url 'dashboard-auto-ontime-edit' key='transport' pk=i.id status='form' %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
+                            <i class="fas fa-pen"></i>
+                        </a>
+<!--                        <a href="" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">-->
+<!--                            <i class="fas fa-pen"></i>-->
+<!--                        </a>-->
+
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+                </tbody>
+
+              </table>
+                <br>
+                <hr>
+                <!--    **********************************************************************************************************  -->
+                {% if suggest_status == 'form' %}
+                    <div class="row">
+                      <!-- left column -->
+                      <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-success">
+
+
+                          <form role="form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <h2 class="form-group text-center">Tezkor Forma</h2>
+                                <div class="form-row">
+                                    {% if request.user.ut == 1 %}
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.department %}
+                                    </div>
+                                    {% else %}
+                                    <div class="form-group col-md-2" hidden>
+                                        {% bootstrap_field form.department %}
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.manufactured_area %}
+                                    </div>
+                                    <div class="form-group col-md-2" title="Tumanni yozing">
+                                        {% bootstrap_field form.state_number %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.manufactured_year  %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.color %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.type %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.fuel_type %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.car_model %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.engine_number %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.kuzov_number %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.tex_talon_number %}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        {% bootstrap_field form.shassi_number %}
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                <div class="form-row">
+                                    <div class="card-action right-align">
+                                          <button type="submit" class="btn btn-block btn-success">
+                                            <i class="fas fa-check"></i>Saqlash
+                                          </button>
+                                    </div>
+                                    <a href="{% url 'dashboard-auto-list' key='transport' %}">
+                                        <div class="card-action ml-1 right-align">
+                                              <button type="button" class="btn btn-block btn-info">
+                                                    <i class="fas fa-home"></i> Bekor qilish
+                                              </button>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            </div>
+
+                          </form>
+                        </div>
+                      </div>
+
+                    </div>
+
+                {% endif %}
+                <!--    **********************************************************************************************************  -->
+
+                {% if suggest_status != 'form' %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if roots.has_previous %}
+                            <a href="?page=1" class="btn btn-primary btn-sm">&laquo;first</a>
+                            <a href="?page={{ roots.previous_page_number }}"  class="btn btn-primary btn-sm">prev</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ roots.number }} of {{ roots.paginator.num_pages }}.
+                        </span>
+
+                        {% if roots.has_next %}
+                            <a href="?page={{ roots.next_page_number }}" class="btn btn-primary btn-sm">next</a>
+                            <a href="?page={{ roots.paginator.num_pages }}" class="btn btn-primary btn-sm">last&raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 mb-4">
+                        <a href="{% url 'dashboard-auto-ontime-add' key='transport' status='form'  %}" class="btn btn-success">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Yangi qo'shish</span>
+                        </a>
+                        <a href="{% url 'home' %}"  class="btn btn-info" >
+                           <span class="icon text-white-50">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            <span class="text">Bosh Menu</span>
+                       </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+
+
+
+{% endif %}

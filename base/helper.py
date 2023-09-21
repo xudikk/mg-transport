@@ -11,7 +11,7 @@ from django.conf import settings
 from random import randint
 
 from django.db import connection
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from methodism import dictfetchone
 
 
@@ -63,7 +63,7 @@ def generate_number():
 def perm_list():
     return ['/', '/logout/',
             '/auto/transport/form/form/',
-            '/department/transport/'
+            '/department/transport/',
             ]
 
 
@@ -71,7 +71,6 @@ def perm_list():
 
 def perm_helper(funk):
     def wrapper(request, *args, **kwargs):
-        print(request.path)
         response = {
             not request.user.is_active: redirect('login'),
             request.user.is_anonymous: redirect('login'),
@@ -79,8 +78,10 @@ def perm_helper(funk):
         s = request.path.rstrip("/")
         remove_digits = str.maketrans('', '', digits)
         res = s.translate(remove_digits)
-        if request.user.ut != 1 and (res not in perm_list() and request.path not in perm_list()):
+        if request.user.ut == 2 and request.path == '/auto/transport/':
             return redirect('home')
+        if request.user.ut != 1 and (res not in perm_list() and request.path not in perm_list()):
+            return render(request, "base.html", {"error": 404})
 
         return response.get(True) or funk(request, *args, **kwargs)
 

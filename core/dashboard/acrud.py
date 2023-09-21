@@ -48,7 +48,11 @@ def gets(requests, key, pk=None, status=None, dpt_id=None):
         form = eval(f"{FormModel}Form")(requests.POST or None, requests.FILES or None, **kwar)
         if form.is_valid():
             form.save()
-            return redirect('dashboard-auto-list', key=key)
+            print("shu yerda", dpt_id)
+            if dpt_id:
+                return redirect('department-auto-filtered', key='transport', dpt_id=requests.user.depart.id)
+            else:
+                return redirect('dashboard-auto-list', key=key)
         ctx["form"] = form
         ctx['suggest_status'] = "form"
         return render(requests, f'pages/{key}.html', ctx)

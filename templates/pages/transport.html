@@ -350,7 +350,7 @@
                                             <i class="fas fa-check"></i>Saqlash
                                           </button>
                                     </div>
-                                    <a href="{% url 'dashboard-auto-list' key='transport' %}">
+                                    <a  {% if request.user.ut != 1 %} href="{% url 'department-auto-filtered' key='transport' dpt_id=request.user.depart.id %}"   {% else %} href="{% url 'dashboard-auto-list' key='transport' %}" {% endif %}>
                                         <div class="card-action ml-1 right-align">
                                               <button type="button" class="btn btn-block btn-info">
                                                     <i class="fas fa-home"></i> Bekor qilish
@@ -397,12 +397,14 @@
                             </span>
                             <span class="text">Yangi qo'shish</span>
                         </a>
+                        {% if request.user.ut == 1  %}
                         <a href="{% url 'home' %}"  class="btn btn-info" >
                            <span class="icon text-white-50">
                                 <i class="fas fa-home"></i>
                             </span>
                             <span class="text">Bosh Menu</span>
                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}

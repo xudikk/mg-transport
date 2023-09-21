@@ -17,4 +17,8 @@ def index(request):
             'active': "active",
             'cnts': cnts(),
         }
-    return render(request, 'pages/index.html', ctx)
+        return render(request, 'pages/index.html', ctx)
+    else:
+        return redirect('department-auto-filtered', key='transport', dpt_id=request.user.depart.id)
+
+
