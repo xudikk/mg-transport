@@ -39,7 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     lang = models.CharField(default='uz', max_length=2, choices=[("uz", 'uz'), ("ru", 'ru'), ("en", 'en')])
-    ut = models.SmallIntegerField(verbose_name="User Type", default=3, choices=[
+    ut = models.SmallIntegerField(verbose_name="User Type", default=2, choices=[
         (1, 'Super Admin'),
         (2, "Admin"),
     ])  # user type

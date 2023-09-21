@@ -10,6 +10,7 @@ from core.forms import *
 
 @perm_helper
 def gets(requests, key, pk=None, status=None, dpt_id=None):
+    kwar = {}
     try:
         Model = {
             "departs": Department,
