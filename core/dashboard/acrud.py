@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from core.models import Department, User, UserDepartment, AutoMotoTransportModel, AutoMotoTransport
+from core.models import Department, User, AutoMotoTransportModel, AutoMotoTransport
 from core.forms import *
 
 

@@ -4,9 +4,33 @@
 #
 #  Tashkent, Uzbekistan
 import datetime
+from contextlib import closing
 
 from django.conf import settings
 from random import randint
+
+from django.db import connection
+from methodism import dictfetchone
+
+
+def cnts():
+    sql = """
+        SELECT (SELECT COUNT(*)
+        FROM department) AS dp,
+        (SELECT COUNT(*)
+        FROM   auto_moto_transport) AS amt,
+        (SELECT COUNT(*)
+        FROM   core_user) AS cu, 
+
+        (SELECT COUNT(*) FROM  core_automototransportmodel) AS mods
+        FROM core_user
+        limit 1
+    """
+    with closing(connection.cursor()) as cursor:
+        cursor.execute(sql)
+        res = dictfetchone(cursor)
+
+    return res
 
 
 def unique_card():

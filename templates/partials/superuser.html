@@ -1,0 +1,84 @@
+
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-6 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{ cnts.dp }}</h3>
+
+                <p>Departamentlar</p>
+              </div>
+              <div class="icon">
+                <i class="fa-solid fa-hotel"></i>
+              </div>
+              <a href="{% url 'dashboard-auto-list' key='departs' %}" class="small-box-footer">Ko'proq ma'lumot  <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-6 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ cnts.amt }}</h3>
+
+                <p>Avtomobillar</p>
+              </div>
+              <div class="icon">
+                <i class="fa-solid fa-car"></i>
+              </div>
+              <a href="{% url 'dashboard-auto-list' key='transport' %}" class="small-box-footer">Ko'proq ma'lumot  <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-6 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>{{ cnts.cu }}</h3>
+
+                <p>Xodimlar</p>
+              </div>
+              <div class="icon">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <a href="" class="small-box-footer">Ko'proq ma'lumot <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-6 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>{{ cnts.mods }}</h3>
+
+                <p>Avtomobil rusumlar</p>
+              </div>
+              <div class="icon">
+                <i class="fa-solid fa-gauge-high"></i>
+              </div>
+              <a href="{% url 'dashboard-auto-list' key='amodel' %}" class="small-box-footer">Ko'proq ma'lumot  <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-7 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+
+            <!-- /.card -->
+          </section>
+          <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->

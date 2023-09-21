@@ -4,8 +4,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from base.db import TimeStampedModel
 
-from core.models import User
-
 
 class Department(TimeStampedModel):
     class Meta:
@@ -34,9 +32,4 @@ class Department(TimeStampedModel):
 
     def __str__(self):
         return f"{self.get_type_display()} - {self.name}"
-
-
-class UserDepartment(models.Model):
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={"user_type": 2})
 

@@ -11,3 +11,16 @@ def main(requests):
         "app_name": settings.APP_NAME
     }
 
+
+def ut(request):
+    if request.user.is_anonymous:
+        return {}
+    utypes = {
+        1: ['partials/superuser.html'],
+        2: ['partials/user.html']
+    }.get(request.user.ut, ['partials/user.html'])
+
+    return {
+        "ut_html": utypes
+    }
+

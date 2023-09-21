@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager
 
 from common.models import Region
+from core.models.department import Department
 
 
 class CustomUserManager(BaseUserManager):
@@ -43,8 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         (2, "Admin"),
     ])  # user type
 
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name=_("Tegishli Viloyat"),
-                               related_name="user_region")
+    depart = models.ForeignKey(Department, verbose_name="User Departamenti", on_delete=models.SET_NULL, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, null=True, editable=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
