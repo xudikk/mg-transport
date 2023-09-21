@@ -1,0 +1,42 @@
+    <li class="nav-item">
+        <a href="{% url 'user' %}" class="nav-link {{ u_active }}">
+            <i class="far fa-user nav-icon"></i>
+            <p>Xodimlar</p>
+        </a>
+    </li>
+
+   <li class="nav-item">
+        <a href="{% url 'dashboard-auto-list' key='departs' %}" class="nav-link {{ departs }}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Bo'linmalar</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="{% url 'dashboard-auto-list' key='transport' %}" class="nav-link {{ transport }}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Avtomobillar</p>
+        </a>
+    </li>
+
+
+    <li class="nav-item">
+        <a href="{% url 'marks' %}" class="nav-link {{ mar_active }}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Avtomobil markalari</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="{% url 'dashboard-auto-list' key='amodel' %}" class="nav-link {{ amodel }}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Avtomobil Rusumlari</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="{% url 'color' %}" class="nav-link {{ color_model }}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Avtomobil Ranglari</p>
+        </a>
+    </li>

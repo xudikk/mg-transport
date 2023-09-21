@@ -9,9 +9,12 @@ import random
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django import forms
 from django.shortcuts import redirect, render
 from methodism import code_decoder
 
+from base.helper import perm_helper
 from core.models import User, Otp
 from methodism import generate_key
 import uuid
@@ -23,9 +26,9 @@ def sign_in(requests):
 
     if requests.POST:
         data = requests.POST
-        user = User.objects.filter(username=data['phone']).first()
+        user = User.objects.filter(username=data['username']).first()
         if not user:
-            return render(requests, 'pages/auth/login.html', {"error": "Phone xato"})
+            return render(requests, 'pages/auth/login.html', {"error": "Username xato"})
 
         if not user.check_password(data['pass']):
             return render(requests, 'pages/auth/login.html', {"error": "Parol xato"})
@@ -105,3 +108,49 @@ def sign_in(requests):
 def sign_out(request):
     logout(request)
     return redirect("login")
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+@perm_helper
+def create_user(request, status=None, pk=None):
+    pagination = User.objects.all()
+    paginator = Paginator(pagination, settings.PAGINATE_BY)
+    page_number = request.GET.get("page", 1)
+    paginated = paginator.get_page(page_number)
+    ctx = {
+        "roots": paginated,
+        "pos": "list",
+        'u_active': "active",
+    }
+    if status == 'form':
+        root = User.objects.filter(pk=pk).first()
+        form = UserForm(instance=root or None)
+
+        if request.method == "POST":
+            if not root:
+                data = {
+                    "username": request.POST.get('username'),
+                    "password": request.POST.get('password'),
+                    "name": request.POST.get('name'),
+                    "depart_id": int(request.POST.get('depart')),
+                }
+                User.objects.create_user(**data)
+            else:
+                root.username = request.POST.get('username')
+                root.name = request.POST.get('name')
+                root.depart_id = request.POST.get('depart')
+                root.save()
+
+            return redirect('user')
+
+        ctx["form"] = form
+        ctx['suggest_status'] = "form"
+        if root:
+            ctx.update({'editing': True})
+
+    return render(request, f'pages/user.html', ctx)

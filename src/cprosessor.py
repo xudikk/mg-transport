@@ -4,6 +4,7 @@
 #
 #  Tashkent, Uzbekistan
 from django.conf import settings
+from django.core.handlers.wsgi import WSGIRequest
 
 
 def main(requests):
@@ -15,12 +16,13 @@ def main(requests):
 def ut(request):
     if request.user.is_anonymous:
         return {}
-    utypes = {
-        1: ['partials/superuser.html'],
-        2: ['partials/user.html']
-    }.get(request.user.ut, ['partials/user.html'])
-
-    return {
-        "ut_html": utypes
-    }
-
+    if request.user.ut == 1:
+        return {
+            "ut_html": ['partials/superuser.html'],
+            "user_sidebar": 'partials/susidebar.html'
+        }
+    else:
+        return {
+            "ut_html": ['partials/user.html'],
+            "user_sidebar": 'partials/user_sidebar.html'
+        }

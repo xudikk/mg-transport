@@ -9,7 +9,7 @@ from django.urls import path, include
 from core.dashboard.acrud import gets, auto_form, auto_del
 from core.dashboard.auto import marka, color
 from core.dashboard.view import index
-from core.dashboard.auth import sign_in, sign_out
+from core.dashboard.auth import sign_in, sign_out, create_user
 
 urlpatterns = [
 
@@ -29,6 +29,11 @@ urlpatterns = [
     path('auto/<key>/form/<status>/', gets, name='dashboard-auto-ontime-add'),
     path('auto/<key>/form/<status>/<pk>/', gets, name='dashboard-auto-ontime-edit'),
 
+    # dpartment auto
+    path('department/<key>/<int:dpt_id>/', gets, name='department-auto-filtered'),
+    # path('auto/<key>/form/add/<status>/<int:dpt_id>/', gets, name='dashboard-auto-ontime-add-by-user'),
+    # path('auto/<key>/form/edit/<status>/<int:dpt_id>/<int:pk>/', gets, name='dashboard-auto-ontime-edit-by-user'),
+
     # marks
     path("marks/", marka, name="marks"),
     path("marks/<status>/", marka, name="marks_add"),
@@ -38,6 +43,11 @@ urlpatterns = [
     path("color/", color, name="color"),
     path("color/<status>/", color, name="color_add"),
     path("color/<status>/<int:pk>/", color, name="color_edit"),
+
+    # marks
+    path("user/", create_user, name="user"),
+    path("user/<status>/", create_user, name="user_add"),
+    path("user/<status>/<int:pk>/", create_user, name="user_edit"),
 
 ]
 

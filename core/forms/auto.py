@@ -25,3 +25,12 @@ class AutoMotoForm(forms.ModelForm):
     class Meta:
         model = AutoMotoTransport
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        root = kwargs.pop('department')
+        super().__init__(*args, **kwargs)
+        self.fields['department'].initial = root
+
+    def save(self, commit=True):
+        instance = super(AutoMotoForm, self).save(commit=commit)
+        return instance

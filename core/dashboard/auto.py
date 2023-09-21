@@ -2,10 +2,13 @@ from django.conf import settings
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
+from base.custom import permission_checker
+from base.helper import perm_helper
 from core.forms.auto import AutoBrandForm, AutoColorForm
 from core.models import AutoBrand, AutoMotoTransportColor
 
 
+@perm_helper
 def marka(request, status=None, pk=None):
     pagination = AutoBrand.objects.all().order_by('-pk')
     paginator = Paginator(pagination, settings.PAGINATE_BY)
@@ -28,6 +31,7 @@ def marka(request, status=None, pk=None):
     return render(request, f'pages/marka.html', ctx)
 
 
+@perm_helper
 def color(request, status=None, pk=None):
     pagination = AutoMotoTransportColor.objects.all().order_by('-pk')
     paginator = Paginator(pagination, settings.PAGINATE_BY)

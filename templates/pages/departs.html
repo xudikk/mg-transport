@@ -212,7 +212,7 @@
                 {% for i in roots %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ i.name }}</td>
+                    <td><a href="{% url 'department-auto-filtered' dpt_id=i.id key='transport' %}">{{ i.name }}</a></td>
                     <td>{% if i.type == 'guarding' %} Qo'riqlash bo'linma{% else %} Harbiy bo'linma{% endif %}</td>
                     <td>{{ i.district.region }}</td>
                     <td>{{ i.district }}</td>
@@ -220,7 +220,7 @@
                     <td>{{ i.phone }}</td>
                     <td>{{ i.stir }}</td>
                     <td>
-                        <a href="{% url 'dashboard-auto-detail' key='departs' pk=i.id %}" title="To'lliq ma'lumotlarni ko'rish" class="btn btn-info btn-circle btn-sm">
+                        <a href="{% url 'department-auto-filtered' dpt_id=i.id key='transport' %}" title="To'lliq ma'lumotlarni ko'rish" class="btn btn-info btn-circle btn-sm">
                             <i class="fas fa-info-circle"></i>
                         </a>
                         <a href="{% url 'dashboard-auto-ontime-edit' key='departs' pk=i.id status='form' %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">

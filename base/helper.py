@@ -5,11 +5,13 @@
 #  Tashkent, Uzbekistan
 import datetime
 from contextlib import closing
+from string import digits
 
 from django.conf import settings
 from random import randint
 
 from django.db import connection
+from django.shortcuts import redirect
 from methodism import dictfetchone
 
 
@@ -56,3 +58,30 @@ def card_mask(number):
 
 def generate_number():
     return unique_card()
+
+
+def perm_list():
+    return ['/', '/logout/',
+            '/auto/transport/form/form/',
+            '/department/transport/'
+            ]
+
+
+#
+
+def perm_helper(funk):
+    def wrapper(request, *args, **kwargs):
+        print(request.path)
+        response = {
+            not request.user.is_active: redirect('login'),
+            request.user.is_anonymous: redirect('login'),
+        }
+        s = request.path.rstrip("/")
+        remove_digits = str.maketrans('', '', digits)
+        res = s.translate(remove_digits)
+        if request.user.ut != 1 and (res not in perm_list() and request.path not in perm_list()):
+            return redirect('home')
+
+        return response.get(True) or funk(request, *args, **kwargs)
+
+    return wrapper

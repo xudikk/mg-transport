@@ -26,10 +26,10 @@ class Department(TimeStampedModel):
         null=True,
         blank=True,
     )
-    stir = models.CharField(max_length=20, verbose_name=_('STIR'), null=True, blank=True)
+    stir = models.CharField(max_length=9, verbose_name=_('STIR'), null=True, blank=True)
 
     phone = PhoneNumberField(verbose_name=_("Telefon raqami"), null=True, blank=True)
 
     def __str__(self):
-        return f"{self.get_type_display()} - {self.name}"
+        return f"{self.name}"
 

@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         (2, "Admin"),
     ])  # user type
 
-    depart = models.ForeignKey(Department, verbose_name="User Departamenti", on_delete=models.SET_NULL, null=True, blank=True)
+    depart = models.ForeignKey(Department, verbose_name="User Bo'linmasi", on_delete=models.SET_NULL, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, null=True, editable=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)

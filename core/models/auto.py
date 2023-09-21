@@ -127,10 +127,10 @@ class AutoMotoTransport(TimeStampedModel):
         verbose_name=_('Rusumi'),
         related_name='auto_moto_transports'
     )
-    engine_number = models.CharField(verbose_name=_('Dvigatel raqami'), max_length=50, unique=True)
-    kuzov_number = models.CharField(verbose_name=_('Kuzov raqami'), max_length=50, unique=True)
-    tex_talon_number = models.CharField(verbose_name=_('Tex. talon raqami'), max_length=50, unique=True)
-    shassi_number = models.CharField(verbose_name=_('Shassi raqami'), max_length=50, unique=True)
+    engine_number = models.CharField(verbose_name=_('Dvigatel raqami'), max_length=50)
+    kuzov_number = models.CharField(verbose_name=_('Kuzov raqami'), max_length=50)
+    tex_talon_number = models.CharField(verbose_name=_('Tex. talon raqami'), max_length=50)
+    shassi_number = models.CharField(verbose_name=_('Shassi raqami'), max_length=50)
 
     def __str__(self):
         return f"{self.type} - {self.car_model.name} - {self.state_number}"

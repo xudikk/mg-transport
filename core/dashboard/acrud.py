@@ -2,12 +2,14 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
+
+from base.helper import perm_helper
 from core.models import Department, User, AutoMotoTransportModel, AutoMotoTransport
 from core.forms import *
 
 
-@login_required(login_url='login')
-def gets(requests, key, pk=None, status=None):
+@perm_helper
+def gets(requests, key, pk=None, status=None, dpt_id=None):
     try:
         Model = {
             "departs": Department,
@@ -22,7 +24,10 @@ def gets(requests, key, pk=None, status=None):
     except:
         return render(requests, 'base.html', {"error": 404})
     if status == "form":
-        pagination = Model.objects.all().order_by('-pk')
+        if requests.user.ut != 1:
+            pagination = AutoMotoTransport.objects.filter(department_id=requests.user.depart.id)
+        else:
+            pagination = Model.objects.all()
         paginator = Paginator(pagination, settings.PAGINATE_BY)
         page_number = requests.GET.get("page", 1)
         paginated = paginator.get_page(page_number)
@@ -34,7 +39,12 @@ def gets(requests, key, pk=None, status=None):
         }
 
         root = Model.objects.filter(pk=pk).first()
-        form = eval(f"{FormModel}Form")(requests.POST or None, requests.FILES or None, instance=root or None)
+        if key == "transport":
+            kwar = {
+                'instance': root or None,
+                'department': requests.user.depart or None
+            }
+        form = eval(f"{FormModel}Form")(requests.POST or None, requests.FILES or None, **kwar)
         if form.is_valid():
             form.save()
             return redirect('dashboard-auto-list', key=key)
@@ -51,7 +61,12 @@ def gets(requests, key, pk=None, status=None):
         if not root:
             ctx['error'] = 404
     else:
-        pagination = Model.objects.all().order_by('-pk')
+
+        if dpt_id:
+            pagination = AutoMotoTransport.objects.filter(department_id=dpt_id)
+        else:
+            pagination = Model.objects.all()
+
         paginator = Paginator(pagination, settings.PAGINATE_BY)
         page_number = requests.GET.get("page", 1)
         paginated = paginator.get_page(page_number)
@@ -65,7 +80,7 @@ def gets(requests, key, pk=None, status=None):
     return render(requests, f'pages/{key}.html', ctx)
 
 
-@login_required(login_url='login')
+@perm_helper
 def auto_form(requests, key, pk=None):
     try:
         Model = {
@@ -100,7 +115,7 @@ def auto_form(requests, key, pk=None):
     return render(requests, f'pages/{key}.html', ctx)
 
 
-@login_required(login_url='login')
+@perm_helper
 def auto_del(requests, key, pk):
     try:
         Model = {

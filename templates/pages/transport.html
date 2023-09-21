@@ -215,7 +215,6 @@
                 <tr>
                     <th>T/r</th>
                     <th>Bo'linma</th>
-                    <th>Ishlab chiqarilgan joyi</th>
                     <th>Davlat raqami</th>
                     <th>Ishlab chiq. yili</th>
                     <th>Rangi</th>
@@ -235,7 +234,6 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ i.department }}</td>
-                    <td>{{ i.manufactured_area }}</td>
                     <td>{{ i.state_number }}</td>
                     <td>{{ i.manufactured_year }}</td>
                     <td>{{ i.color }}</td>
@@ -274,6 +272,10 @@
                         <a href="{% url 'dashboard-auto-ontime-edit' key='transport' pk=i.id status='form' %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
                             <i class="fas fa-pen"></i>
                         </a>
+<!--                        <a href="" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">-->
+<!--                            <i class="fas fa-pen"></i>-->
+<!--                        </a>-->
+
                     </td>
 
                 </tr>
@@ -298,10 +300,15 @@
                             <div class="card-body">
                                 <h2 class="form-group text-center">Tezkor Forma</h2>
                                 <div class="form-row">
-
+                                    {% if request.user.ut == 1 %}
                                     <div class="form-group col-md-2">
                                         {% bootstrap_field form.department %}
                                     </div>
+                                    {% else %}
+                                    <div class="form-group col-md-2" hidden>
+                                        {% bootstrap_field form.department %}
+                                    </div>
+                                    {% endif %}
                                     <div class="form-group col-md-2">
                                         {% bootstrap_field form.manufactured_area %}
                                     </div>
@@ -384,7 +391,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-xl-6 col-md-6 mb-4">
-                        <a href="{% url 'dashboard-auto-ontime-add' key='transport' status='form' %}" class="btn btn-success" >
+                        <a href="{% url 'dashboard-auto-ontime-add' key='transport' status='form'  %}" class="btn btn-success">
                             <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
                             </span>
