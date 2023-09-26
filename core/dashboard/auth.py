@@ -154,3 +154,17 @@ def create_user(request, status=None, pk=None):
             ctx.update({'editing': True})
 
     return render(request, f'pages/user.html', ctx)
+
+
+@perm_helper
+def change_password(request, user_id):
+    if request.POST and request.user.ut == 1:
+        root = User.objects.filter(pk=user_id).first()
+        if root and root.ut != 1:
+            root.set_password(request.POST.get("password"))
+            root.save()
+        if root == request.user:
+            request.user.set_password(request.POST.get("password"))
+            request.user.save()
+
+    return redirect('user')

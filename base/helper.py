@@ -75,6 +75,8 @@ def perm_helper(funk):
             not request.user.is_active: redirect('login'),
             request.user.is_anonymous: redirect('login'),
         }
+        if True in response.keys():
+            return response.get(True)
         s = request.path.rstrip("/")
         remove_digits = str.maketrans('', '', digits)
         res = s.translate(remove_digits)
@@ -83,6 +85,6 @@ def perm_helper(funk):
         if request.user.ut != 1 and (res not in perm_list() and request.path not in perm_list()):
             return render(request, "base.html", {"error": 404})
 
-        return response.get(True) or funk(request, *args, **kwargs)
+        return funk(request, *args, **kwargs)
 
     return wrapper

@@ -165,7 +165,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
            style="opacity: .8">
       <span class="brand-text font-weight-light">{{ app_name }}</span>
     </a>
-
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
@@ -236,7 +235,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         {% if error == 404 %}
           {% include 'pages/404.html' %}
         {% else %}
-        {% block content %} {% endblock %}
+          {% block content %} {% endblock %}
         {% endif %}
 
         <!-- /.row -->
@@ -266,7 +265,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-<!-- Delete Modal-->
+<!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">

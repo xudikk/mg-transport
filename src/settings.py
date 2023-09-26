@@ -13,8 +13,8 @@ APP_NAME = "MG Transport"
 load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY', 1)
-DEBUG = bool(os.getenv('DEBUG') == 'True')
-ALLOWED_HOSTS = ['*'] if DEBUG else os.getenv('ALLOWED_HOSTS').split(',')
+DEBUG = bool(os.getenv('DEBUG') == 'False')
+ALLOWED_HOSTS = ['*'] # if DEBUG else os.getenv('ALLOWED_HOSTS').split(',')
 
 METHODS = os.getenv('AUTH_METHODS', '').split(',')
 
@@ -78,24 +78,24 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+# if DEBUG:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.'+os.getenv('DB_ENGINE', "postgresql"),
-            'NAME': os.getenv("POSTGRES_DB"),
-            'USER': os.getenv("POSTGRES_USER"),
-            'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
-            'HOST': os.getenv('POSTGRES_HOST'),
-            'PORT': os.getenv("POSTGRES_PORT"),
-        }
-    }
+}
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.'+os.getenv('DB_ENGINE', "postgresql"),
+#             'NAME': os.getenv("POSTGRES_DB"),
+#             'USER': os.getenv("POSTGRES_USER"),
+#             'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
+#             'HOST': os.getenv('POSTGRES_HOST'),
+#             'PORT': os.getenv("POSTGRES_PORT"),
+#         }
+#     }
 
 #Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -132,8 +132,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Media files (docs, Images, files)
