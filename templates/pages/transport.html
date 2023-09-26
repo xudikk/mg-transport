@@ -210,7 +210,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="transportTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>T/r</th>
@@ -261,7 +261,18 @@
                         {% endif %}
 
                     </td>
-                    <td>{{ i.fuel_type }}</td>
+                    <td>
+                        {% if i.fuel_type == 'electricity' %}Elektr
+                        {% elif i.fuel_type == 'petrol' %}Benzin
+                        {% elif i.fuel_type == 'spg_sng_petrol' %}SPG+SNG benzini
+                        {% elif i.fuel_type == 'gbasng' %}GBASNG
+                        {% elif i.fuel_type == 'gbaspg' %}GBASPG
+                        {% elif i.fuel_type == 'diesel' %}Dizel
+                        {% elif i.fuel_type == 'hybrid' %}Hibrid
+                        {% else %}
+                        Boshqa
+                        {% endif %}
+                    </td>
                     <td>{{ i.car_model }}</td>
                     <td>{{ i.engine_number }}</td>
 
@@ -391,6 +402,19 @@
                 <hr>
                 <div class="row">
                     <div class="col-xl-6 col-md-6 mb-4">
+                        <button id="wordDownloader" class="btn btn-info" >
+                           <span class="icon text-white-50">
+                                <i class="fas fa-download"></i>
+                            </span>
+                            <span class="text">Word</span>
+                       </button>
+                        <button id="excelDownloader" class="btn btn-info"  onclick="tableToExcel()">
+                           <span class="icon text-white-50">
+                                <i class="fas fa-download"></i>
+                            </span>
+                            <span class="text">Excel</span>
+                       </button>
+
                         <a href="{% url 'dashboard-auto-ontime-add' key='transport' status='form'  %}" class="btn btn-success">
                             <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
@@ -404,6 +428,7 @@
                             </span>
                             <span class="text">Bosh Menu</span>
                        </a>
+
                         {% endif %}
                     </div>
                 </div>

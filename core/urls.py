@@ -9,7 +9,7 @@ from django.urls import path, include
 from core.dashboard.acrud import gets, auto_form, auto_del
 from core.dashboard.auto import marka, color
 from core.dashboard.view import index
-from core.dashboard.auth import sign_in, sign_out, create_user, change_password
+from core.dashboard.auth import sign_in, sign_out, create_user, change_password, grader
 
 urlpatterns = [
 
@@ -49,6 +49,8 @@ urlpatterns = [
     path("user/<status>/", create_user, name="user_add"),
     path("user/<status>/<int:pk>/", create_user, name="user_edit"),
     path("change/password/<int:user_id>/", change_password, name="change-password"),
+    path("grader/<int:gr>/<int:pk>/", grader, name="grader"),
+
 
 ]
 

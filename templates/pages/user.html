@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block title %}MG | User {% endblock %}
-{% block page_title %} Avtomobil Ranglari {% endblock %}
-{% block pagetitle %} Ranglar {% endblock %}
+{% block page_title %} Barcha Xodimlar {% endblock %}
+{% block pagetitle %} Xodimlar {% endblock %}
 {% load bootstrap4 %}
 
 {% block content %}
@@ -67,6 +67,17 @@
                             <a  href="" data-toggle="modal" data-target="#ChangePasswordModal{{ i.id }}" title="Parolni o'zgartirish" class="btn btn-info btn-circle btn-sm">
                                 <i class="fas fa-key"></i>
                             </a>
+                            {% if request.user.is_staff and request.user.is_superuser and not i.is_staff %}
+                              {% if i.ut == 2 %}
+                                <a  href="{% url 'grader' gr=1 pk=i.id %}" title="Super Admin qilish" class="btn btn-success btn-circle btn-sm">
+                                    <i class="fas fa-angle-double-up"></i>
+                                </a>
+                              {% elif i.ut == 1 %}
+                                <a  href="{% url 'grader' gr=2 pk=i.id %}" title="Super Admin qilish" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-angle-double-down"></i>
+                                </a>
+                              {% endif %}
+                            {% endif %}
                         </td>
                     </tr>
                 {% endif %}

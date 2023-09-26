@@ -329,5 +329,70 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="{% static 'ddist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'fontawesome_icons/css/all.min.js' %}"></script>
+
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+    function exportToWord() {
+    // Get the HTML content of your table
+    var html = document.getElementById('transportTable').outerHTML;
+
+    // Create a Blob with the HTML content and specify the MIME type
+    var blob = new Blob(['\ufeff', html], {
+        type: 'application/msword'
+    });
+
+    // Create a URL for the Blob
+    var url = URL.createObjectURL(blob);
+
+    // Create a link element
+    var downloadLink = document.createElement('a');
+
+    // Set the download attribute of the link element
+    downloadLink.download = 'transportlar.docx';
+
+    // Set the href of the link element to the Blob URL
+    downloadLink.href = url;
+
+    // Append the link element to the body
+    document.body.appendChild(downloadLink);
+
+    // Simulate a click on the link element to start the download
+    downloadLink.click();
+
+    // Remove the link element from the body
+    document.body.removeChild(downloadLink);
+}
+document.getElementById('wordDownloader').addEventListener('click', exportToWord);
+</script>
+  <script>
+        document.getElementById('excelDownloader').addEventListener('click', function() {
+            var table = document.getElementById('transportTable');
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.table_to_sheet(table);
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            // Generate an XLSX file
+            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'array'});
+
+            // Create a Blob object
+            var blob = new Blob([wbout], {type:'application/octet-stream'});
+
+            // Create a link element
+            var link = document.createElement('a');
+
+            // Set the href and download attributes for the link
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'transportlar.xlsx';
+
+            // Append the link to the body
+            document.body.appendChild(link);
+
+            // Simulate a click of the link
+            link.click();
+
+            // Remove the link from the body
+            document.body.removeChild(link);
+        });
+  </script>
 </body>
 </html>

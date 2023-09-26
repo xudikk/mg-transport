@@ -168,3 +168,15 @@ def change_password(request, user_id):
             request.user.save()
 
     return redirect('user')
+
+
+@perm_helper
+def grader(request, gr, pk):
+    root = User.objects.filter(pk=pk).first()
+    if not root or request.user.ut != 1:
+        return render(request, "base.html", {"error": 404})
+    if request.user.ut == 1:
+        root.ut = gr
+        root.save()
+    return redirect('user')
+
