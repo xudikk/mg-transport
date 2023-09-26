@@ -330,7 +330,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{% static 'ddist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'fontawesome_icons/css/all.min.js' %}"></script>
 
-<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script type="text/javascript" src="{% static 'for_excel/xlsx.full.min.js' %}"></script>
 <script>
     function exportToWord() {
     // Get the HTML content of your table
