@@ -132,5 +132,9 @@ class AutoMotoTransport(TimeStampedModel):
     tex_talon_number = models.CharField(verbose_name=_('Tex. talon raqami'), max_length=50)
     shassi_number = models.CharField(verbose_name=_('Shassi raqami'), max_length=50)
 
+    change = models.BooleanField(default=True)
+    last_change = models.DateTimeField(null=True, blank=True)
+    change_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
     def __str__(self):
         return f"{self.type} - {self.car_model.name} - {self.state_number}"

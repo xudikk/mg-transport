@@ -17,8 +17,8 @@ def page_not_found_view(request, exception):
     return render(request, 'pages/abs404.html', context={"error": 404}, status=404)
 
 
-def error_500(request, exception):
-    return render(request, 'pages/abs500.html', context={}, status=500)
+def error_500(request, *args, **kwargs):
+    return render(request, 'pages/abs500.html', context={"error": 500}, status=500)
 
 
 urlpatterns = [
