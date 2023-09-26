@@ -44,7 +44,7 @@ urlpatterns = [
     path("color/<status>/", color, name="color_add"),
     path("color/<status>/<int:pk>/", color, name="color_edit"),
 
-    # marks
+    # users
     path("user/", create_user, name="user"),
     path("user/<status>/", create_user, name="user_add"),
     path("user/<status>/<int:pk>/", create_user, name="user_edit"),

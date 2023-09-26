@@ -17,6 +17,10 @@ def page_not_found_view(request, exception):
     return render(request, 'pages/abs404.html', context={"error": 404}, status=404)
 
 
+def error_500(request, exception):
+    return render(request, 'pages/abs500.html', context={}, status=500)
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("core.urls"))
@@ -31,3 +35,4 @@ urlpatterns += [
 ]
 
 handler404 = "src.urls.page_not_found_view"
+handler500 = "src.urls.error_500"
