@@ -19,6 +19,6 @@ def index(request):
         }
         return render(request, 'pages/index.html', ctx)
     else:
-        return redirect('department-auto-filtered', key='transport', dpt_id=request.user.depart.id)
+        return redirect('transport-auto-filtered', dpt_id=request.user.depart.id)
 
 

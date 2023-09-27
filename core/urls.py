@@ -8,6 +8,7 @@ from django.urls import path, include
 
 from core.dashboard.acrud import gets, auto_form, auto_del
 from core.dashboard.auto import marka, color
+from core.dashboard.transport_control import transport_gets, notifications, conf_or_delete
 from core.dashboard.view import index
 from core.dashboard.auth import sign_in, sign_out, create_user, change_password, grader
 
@@ -31,6 +32,18 @@ urlpatterns = [
 
     # dpartment auto
     path('department/<key>/<int:dpt_id>/', gets, name='department-auto-filtered'),
+
+
+    # transport
+    path("transport/", transport_gets, name="transport-list"),
+    path('transport/<int:dpt_id>/', transport_gets, name='transport-auto-filtered'),
+    path('transport/form/<status>/', transport_gets, name='transport-auto-ontime-add'),
+    path('transport/form/<status>/<pk>/', transport_gets, name='transport-auto-ontime-edit'),
+
+    # notificaitons
+    path("notes/", notifications, name="notes"),
+    path("conf/delete/<status>/<pk>/", conf_or_delete, name="conf_or_delete"),
+
     # path('auto/<key>/form/add/<status>/<int:dpt_id>/', gets, name='dashboard-auto-ontime-add-by-user'),
     # path('auto/<key>/form/edit/<status>/<int:dpt_id>/<int:pk>/', gets, name='dashboard-auto-ontime-edit-by-user'),
 

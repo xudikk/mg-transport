@@ -131,10 +131,22 @@ class AutoMotoTransport(TimeStampedModel):
     kuzov_number = models.CharField(verbose_name=_('Kuzov raqami'), max_length=50)
     tex_talon_number = models.CharField(verbose_name=_('Tex. talon raqami'), max_length=50)
     shassi_number = models.CharField(verbose_name=_('Shassi raqami'), max_length=50)
-
-    change = models.BooleanField(default=True)
-    last_change = models.DateTimeField(null=True, blank=True)
-    change_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    change = models.BooleanField(default=True, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=[("active", "Faol"), ("waiting", "Javob Kutulyabdi")],
+                              default='waiting', null=True, blank=True)
 
     def __str__(self):
         return f"{self.type} - {self.car_model.name} - {self.state_number}"
+
+
+class NotificationModel(models.Model):
+    last_change = models.DateTimeField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    change_type = models.CharField(max_length=20, default='edit', choices=[
+        ("add", "Qo'shish"),
+        ("edit", "O'zgartirish"),
+        ("delete", "O'chirish")])
+    transport = models.ForeignKey(AutoMotoTransport, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.full_name()} - {self.transport.state_number} - {self.change_type}"

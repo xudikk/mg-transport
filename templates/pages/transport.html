@@ -178,7 +178,7 @@
                                 <i class="fas fa-check"></i>O'zgarishlarni Saqlash
                               </button>
                         </div>
-                        <a href="{% url 'dashboard-auto-list' key='transport' %}">
+                        <a href="{% url 'transport-list' %}">
                             <div class="card-action ml-1 right-align">
                                   <button type="button" class="btn btn-block btn-info">
                                         <i class="fas fa-home"></i> Listlarga qaytish
@@ -231,7 +231,11 @@
                 </thead>
                 <tbody>
                 {% for i in roots %}
+                {% if i.status != 'active' %}
+                <tr class="text-danger">
+                {% else %}
                 <tr>
+                {% endif %}
                     <td>{{ forloop.counter }}</td>
                     <td>{{ i.department }}</td>
                     <td>{{ i.state_number }}</td>
@@ -264,7 +268,7 @@
                     <td>
                         {% if i.fuel_type == 'electricity' %}Elektr
                         {% elif i.fuel_type == 'petrol' %}Benzin
-                        {% elif i.fuel_type == 'spg_sng_petrol' %}SPG+SNG benzini
+                        {% elif i.fuel_type == 'spg_sng_petrol' %}SPG+SNG benzin
                         {% elif i.fuel_type == 'gbasng' %}GBASNG
                         {% elif i.fuel_type == 'gbaspg' %}GBASPG
                         {% elif i.fuel_type == 'diesel' %}Dizel
@@ -273,20 +277,25 @@
                         Boshqa
                         {% endif %}
                     </td>
-                    <td>{{ i.car_model }}</td>
+                    <td>{{ i.car_model.name }}</td>
                     <td>{{ i.engine_number }}</td>
-
                     <td>{{ i.kuzov_number }}</td>
                     <td>{{ i.tex_talon_number }}</td>
                     <td>{{ i.shassi_number }}</td>
                     <td>
-                        <a href="{% url 'dashboard-auto-ontime-edit' key='transport' pk=i.id status='form' %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
+                         {% if i.status == 'active' %}
+                        <a href="{% url 'transport-auto-ontime-edit' pk=i.id status='form' %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
                             <i class="fas fa-pen"></i>
                         </a>
-<!--                        <a href="" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">-->
-<!--                            <i class="fas fa-pen"></i>-->
-<!--                        </a>-->
-
+                        {% endif %}
+                        {% if i.status != 'active' and request.user.ut == 1 %}
+                        <a href="{% url 'conf_or_delete' status='conf' pk=i.id %}?next={{ next }}" title="Tasdiqlash" class="btn btn-success btn-circle btn-sm">
+                            <i class="fas fa-thumbs-up"></i>
+                        </a>
+                        <a href="{% url 'conf_or_delete' status='delete' pk=i.id %}?next={{ next }}" title="O'chirish" class="btn btn-danger btn-circle btn-sm">
+                            <i class="fas fa-thumbs-down"></i>
+                        </a>
+                        {% endif %}
                     </td>
 
                 </tr>
@@ -361,7 +370,7 @@
                                             <i class="fas fa-check"></i>Saqlash
                                           </button>
                                     </div>
-                                    <a  {% if request.user.ut != 1 %} href="{% url 'department-auto-filtered' key='transport' dpt_id=request.user.depart.id %}"   {% else %} href="{% url 'dashboard-auto-list' key='transport' %}" {% endif %}>
+                                    <a  {% if request.user.ut != 1 %} href="{% url 'transport-auto-filtered' dpt_id=request.user.depart.id %}"   {% else %} href="{% url 'dashboard-auto-list' key='transport' %}" {% endif %}>
                                         <div class="card-action ml-1 right-align">
                                               <button type="button" class="btn btn-block btn-info">
                                                     <i class="fas fa-home"></i> Bekor qilish
@@ -415,7 +424,7 @@
                             <span class="text">Excel</span>
                        </button>
 
-                        <a href="{% url 'dashboard-auto-ontime-add' key='transport' status='form'  %}" class="btn btn-success">
+                        <a href="{% url 'transport-auto-ontime-add' status='form'  %}" class="btn btn-success">
                             <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
                             </span>

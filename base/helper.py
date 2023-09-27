@@ -62,8 +62,8 @@ def generate_number():
 
 def perm_list():
     return ['/', '/logout/',
-            '/auto/transport/form/form/',
-            '/department/transport/',
+            '/transport/form/form/',
+            '/transport/2/',
             ]
 
 
@@ -80,7 +80,7 @@ def perm_helper(funk):
         s = request.path.rstrip("/")
         remove_digits = str.maketrans('', '', digits)
         res = s.translate(remove_digits)
-        if request.user.ut == 2 and request.path == '/auto/transport/':
+        if request.user.ut == 2 and request.path == '/transport/':
             return redirect('home')
         if request.user.ut != 1 and (res not in perm_list() and request.path not in perm_list()):
             return render(request, "base.html", {"error": 404})
